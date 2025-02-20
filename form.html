@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+</head>
+<body>
+    <h2>Registration Form</h2>
+    <form id="registrationForm" onsubmit="return validateForm()">
+        
+        <label for="name">Full Name:</label>
+        <input type="text" id="name" name="name" required>
+        <small id="nameError" style="color: red;"></small>
+        <br><br>
+
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" required>
+        <small id="ageError" style="color: red;"></small>
+        <br><br>
+
+        <label for="email">Email ID:</label>
+        <input type="email" id="email" name="email" required>
+        <small id="emailError" style="color: red;"></small>
+        <br><br>
+
+        <label for="pincode">Pin Code:</label>
+        <input type="text" id="pincode" name="pincode" required>
+        <small id="pincodeError" style="color: red;"></small>
+        <br><br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <small id="passwordError" style="color: red;"></small>
+        <br><br>
+
+        <label for="confirmPassword">Confirm Password:</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" required>
+        <small id="confirmPasswordError" style="color: red;"></small>
+        <br><br>
+
+        <button type="submit">Register</button>
+    </form>
+
+    <script>
+        function validateForm() {
+            let isValid = true;
+
+            // Reset error messages
+            document.getElementById("nameError").textContent = "";
+            document.getElementById("ageError").textContent = "";
+            document.getElementById("emailError").textContent = "";
+            document.getElementById("pincodeError").textContent = "";
+            document.getElementById("passwordError").textContent = "";
+            document.getElementById("confirmPasswordError").textContent = "";
+
+            let name = document.getElementById("name").value.trim();
+            let age = document.getElementById("age").value.trim();
+            let email = document.getElementById("email").value.trim();
+            let pincode = document.getElementById("pincode").value.trim();
+            let password = document.getElementById("password").value;
+            let confirmPassword = document.getElementById("confirmPassword").value;
+
+            // Name validation
+            if (!/^[a-zA-Z\s]+$/.test(name)) {
+                document.getElementById("nameError").textContent = "Enter a valid name (letters only).";
+                isValid = false;
+            }
+
+            // Age validation
+            if (age === "" || age < 18 || age > 100) {
+                document.getElementById("ageError").textContent = "Age must be between 18 and 100.";
+                isValid = false;
+            }
+
+            // Email validation
+            let emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (!emailPattern.test(email)) {
+                document.getElementById("emailError").textContent = "Enter a valid email.";
+                isValid = false;
+            }
+
+            // Pin Code validation
+            let pinPattern = /^[0-9]{6}$/;
+            if (!pinPattern.test(pincode)) {
+                document.getElementById("pincodeError").textContent = "Pin Code must be 6 digits.";
+                isValid = false;
+            }
+
+            // Password validation
+            let passwordPattern = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%?&])[A-Za-z\d@$!%?&]{6,}$/;
+            if (!passwordPattern.test(password)) {
+                document.getElementById("passwordError").textContent =
+                    "Password must be at least 6 characters long, include 1 uppercase letter, 1 number, and 1 special character.";
+                isValid = false;
+            }
+
+            // Confirm Password validation
+            if (password !== confirmPassword) {
+                document.getElementById("confirmPasswordError").textContent = "Passwords do not match.";
+                isValid = false;
+            }
+
+            return isValid;
+        }
+    </script>
+</body>
+</html>
